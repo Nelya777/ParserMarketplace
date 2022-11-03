@@ -70,8 +70,8 @@ namespace ParserControl.SearchProducts.SearchTask.Wildberries
         private bool IsRangePrice(int item)
         {
             string price = "";
-            try { price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/ins")).Text; }
-            catch (Exception ex) { price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/span")).Text; }
+            try { price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/ins")).Text; }
+            catch (Exception ex) { price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/span")).Text; }
             double.TryParse(string.Join("", price.Where(c => char.IsDigit(c) || c == ',')), out var value);
             return value >= AppState.Instance.PriсeMin && value <= AppState.Instance.PriсeMax;
         }
@@ -101,7 +101,7 @@ namespace ParserControl.SearchProducts.SearchTask.Wildberries
                 while (true)
                 {
                     count++;
-                    var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{count}]/div/div"));
+                    var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{count}]/div/a"));
                 }
             }
             catch (Exception ex)
@@ -115,7 +115,7 @@ namespace ParserControl.SearchProducts.SearchTask.Wildberries
         /// </summary>
         private bool IsExistProduct(int item)
         {
-            var id = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div[1]/a")).GetAttribute("href");
+            var id = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a")).GetAttribute("href");
             var countProduct = _products.Where(x => x.Id == id).Count();
             return countProduct != 0;
         }
@@ -123,14 +123,14 @@ namespace ParserControl.SearchProducts.SearchTask.Wildberries
         private Product GetSearchResult(int item)
         {
             //outerHTML
-            var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[1]/div[2]/img")).GetAttribute("src");
-            var name = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[2]/div[2]/span")).Text;
+            var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[1]/div[2]/img")).GetAttribute("src");
+            var name = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[2]/div[2]/span")).Text;
             
             string price = "";
-            try { price =  _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/ins")).Text; }
-            catch (Exception ex) { price =  _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/span")).Text; }
+            try { price =  _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/ins")).Text; }
+            catch (Exception ex) { price =  _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a/div[2]/div[1]/span/span")).Text; }
             
-            var link = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div/div[1]/div[2]/div[2]/div[5]/div/div/div[{item}]/div[1]/a")).GetAttribute("href");
+            var link = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/main/div[2]/div/div[2]/div/div[1]/div/div[3]/div[5]/div/div/div[{item}]/div/a")).GetAttribute("href");
             var shopName = "wildberries";
             var product = new Product(photo, name, price, link, shopName);
             return product;
