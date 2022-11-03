@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B52C32A-1A63-435B-99BF-3EDF81415C12}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ParserControl</RootNamespace>
+    <AssemblyName>ParserControl</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Selenium.WebDriver.4.1.1\lib\net47\WebDriver.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Init.cs" />
+    <Compile Include="Interfaces\IAppState.cs" />
+    <Compile Include="Interfaces\IButton.cs" />
+    <Compile Include="Interfaces\IModule.cs" />
+    <Compile Include="Interfaces\IProduct.cs" />
+    <Compile Include="Interfaces\ISearchTask.cs" />
+    <Compile Include="Interfaces\IStringViewPath.cs" />
+    <Compile Include="Interfaces\IWebResource.cs" />
+    <Compile Include="Interfaces\IWindowInput.cs" />
+    <Compile Include="Modules\State\AppState.cs" />
+    <Compile Include="Modules\State\Product.cs" />
+    <Compile Include="Modules\State\WebResourceAliexpress.cs" />
+    <Compile Include="Modules\State\WebResourceWildberries.cs" />
+    <Compile Include="Modules\ViewController\Aliexpress\UiHomePageAliexpress.cs" />
+    <Compile Include="Modules\ViewController\BracedViewPath.cs" />
+    <Compile Include="Modules\ViewController\BracedViewPathAttribute.cs" />
+    <Compile Include="Modules\ViewController\DefaultButton.cs" />
+    <Compile Include="Modules\ViewController\DefaultWindowInput.cs" />
+    <Compile Include="Modules\ViewController\Ozon\UiHomePage.cs" />
+    <Compile Include="Modules\ViewController\StringViewPathComparer.cs" />
+    <Compile Include="Modules\ViewController\UiFactory.cs" />
+    <Compile Include="Modules\ViewController\UiParser.cs" />
+    <Compile Include="Modules\ViewController\ViewController.cs" />
+    <Compile Include="Modules\ViewController\Wildberries\UiHomePageWildberries.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchProducts\SearchProducts.cs" />
+    <Compile Include="SearchProducts\SearchTask\Aliexpress\SearchAliexpressTask.cs" />
+    <Compile Include="SearchProducts\SearchTask\Ozon\SearchOzonTask.cs" />
+    <Compile Include="SearchProducts\SearchTask\Wildberries\SearchWildberriesTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Selenium.WebDriver.ChromeDriver.101.0.4951.4100\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\..\packages\Selenium.WebDriver.ChromeDriver.101.0.4951.4100\build\Selenium.WebDriver.ChromeDriver.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Selenium.WebDriver.ChromeDriver.101.0.4951.4100\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Selenium.WebDriver.ChromeDriver.101.0.4951.4100\build\Selenium.WebDriver.ChromeDriver.targets'))" />
+  </Target>
+</Project>

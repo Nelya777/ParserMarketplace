@@ -1,0 +1,534 @@
+﻿@page "/"
+@using ParserControl
+@implements IDisposable
+
+
+
+<div class="row navbar navbar-light bg-light ">
+    <div class="col-cm-12 col-md-8"
+
+           <input type="search" class="form-control mr-sm-2" placeholder="Введите название товара..." @bind-value="input" @bind-value:event="oninput"
+                   @onkeypress="((KeyboardEventArgs args)=> ProcessingInput(args))" />
+
+
+
+</div>
+    <div class="col-cm-5 col-md-4"
+           <button tupe="button" class="btn btn-outline-success my-2 my-sm-0" @onclick="Search">Найти</button>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <select @onchange="(e => SortProduct(e.Value.ToString()))">
+                    <option value="-1">Сортировка по цене</option>
+                    <option value="0">Цена min</option>
+                    <option value="1">Цена max</option>
+                </select>
+            </div>
+
+            <div class="col-6 col-md-4">
+
+                <input type="search" class="form-control mr-sm-2" placeholder="От" @bind-value="AppState.Instance.PriсeMin" @bind-value:event="oninput"/>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <input type="search" class="form-control mr-sm-2" placeholder="До" @bind-value="AppState.Instance.PriсeMax" @bind-value:event="oninput"/>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<br>
+
+
+<div class="row">
+    <div class="col-8 align-content-xl-center">
+        <div class="container ">
+            <div class="сol-cm-12">
+                <div class="@visibleProduct1">
+                    <div class="border dark rounded p-2 border bg-light"
+                        <div class="col">
+                            <div class="row">
+                                <div class="thumbnail">
+                                    <img src="@pageMain.Product1.PhotoLink" alt="Product photo" height="300" width="200">
+                                    <div class="caption">
+                                        <h6>@pageMain.Product1.Name</h6>
+                                        <b>
+                                            <p> @pageMain.Product1.Price</p>
+                                        </b>
+                                        <p>
+                                            <a href="@pageMain.Product1.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product1.ShopName</a>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div class="@visibleProduct2">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col ">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product2.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product2.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product2.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product2.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product2.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+
+                <div class="@visibleProduct3">
+                    <div class="border dark rounded p-2 border bg-light "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product3.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product3.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product3.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product3.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product3.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+                <div class="@visibleProduct4">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product4.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product4.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product4.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product4.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product4.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+                <div class="@visibleProduct5">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product5.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product5.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product5.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product5.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product5.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+                <div class="@visibleProduct6">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product6.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product6.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product6.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product6.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product6.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+                <div class="@visibleProduct7">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product7.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product7.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product7.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product7.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти @pageMain.Product7.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+                <br>
+                <div class="@visibleProduct8">
+                    <div class="border dark rounded p-2 border bg-light  "
+                   <div class="col">
+                      <div class="row">
+                          <div class="thumbnail">
+                              <img src="@pageMain.Product8.PhotoLink" alt="Product photo" height="300" width="200">
+                              <div class="caption">
+                                  <h6>@pageMain.Product8.Name</h6>
+                                  <b>
+                                      <p> @pageMain.Product8.Price</p>
+                                  </b>
+                                  <p>
+                                      <a href="@pageMain.Product8.Link" class="btn btn-success btn-lg" role="button" target="_blank">Перейти  @pageMain.Product8.ShopName</a>
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+
+                <div class="d-grid gap">
+
+                    <br>
+                    <button type="button" class="btn btn-success btn-sm btn-block" @onclick="ShowMore">Показать еще</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="сol-cm-4">
+
+        <div class="border border-dark rounded p-4  "
+
+
+              <div class="col ">
+                 <div class="custom-control custom-checkbox ">
+                   <input type="checkbox" class="custom-control-input" id="AllId" @onclick="ChooseAll" @bind="All"/>
+                   <label class="custom-control-label" for="AllId">Выбрать все </label>
+                 </div>
+              </div>
+
+         <br>
+
+        <div class="col">
+            <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="AliexpressId" @onclick="ChooseAliexpress" @bind="Aliexpress"/>
+                <label class="custom-control-label" for="AliexpressId">Aliexpress</label>
+            </div>
+        </div>
+
+
+
+
+        <div class="col">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="WildberriesId" @onclick="ChooseWildberries" @bind="Wildberries"/>
+                <label class="custom-control-label" for="WildberriesId">Wildberries</label>
+            </div>
+        </div>
+
+     </div>
+
+
+    </div>
+</div>
+<br>
+<div class="col">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @*<li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>*@
+            <div class="@IsVisiblePage1()">
+            <li class="page-item" @onclick="OpenPage1"><a class="page-link" href="#">1</a></li>
+</div>
+<div class="@IsVisiblePage2()">
+    <li class="page-item" @onclick="OpenPage2"><a class="page-link" href="#">2</a></li>
+</div>
+<div class="@IsVisiblePage3()">
+    <li class="page-item" @onclick="OpenPage3"><a class="page-link" href="#">3</a></li>
+</div>
+<div class="@IsVisiblePage4()">
+    <li class="page-item" @onclick="OpenPage4"><a class="page-link" href="#">4</a></li>
+</div>
+<div class="@IsVisiblePage5()">
+    <li class="page-item" @onclick="OpenPage5"><a class="page-link" href="#">5</a></li>
+</div>
+<div class="@IsVisiblePage6()">
+    <li class="page-item" @onclick="OpenPage6"><a class="page-link" href="#">6</a></li>
+</div>
+<div class="@IsVisiblePage7()">
+    <li class="page-item" @onclick="OpenPage7"><a class="page-link" href="#">7</a></li>
+</div>
+@*<li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>*@
+    </ul>
+</nav>
+</div>
+
+
+
+@code{
+
+    Page pageMain;
+    int numberPage = 1;
+    string input = string.Empty;
+    string listbox = "-1";
+    bool Aliexpress = false;
+    bool Wildberries = false;
+    bool All = false;
+    string visibleProduct1 = "invisible";
+    string visibleProduct2 = "invisible";
+    string visibleProduct3 = "invisible";
+    string visibleProduct4 = "invisible";
+    string visibleProduct5 = "invisible";
+    string visibleProduct6 = "invisible";
+    string visibleProduct7 = "invisible";
+    string visibleProduct8 = "invisible";
+
+    void ProcessingInput(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter") Search();
+    }
+
+    async void Search()
+    {
+        AppState.Instance.SearchQuery = input;
+        var SearchProducts = new SearchProducts();
+        await Task.Factory.StartNew(() => AppState.Instance.SearchProducts?.OnComandSearch(new object()));
+        numberPage = 1;
+        ChangeGraph(numberPage);
+        StateHasChanged();
+    }
+    async void ShowMore()
+    {
+        await Task.Factory.StartNew(() => AppState.Instance.SearchProducts?.OnComandSearch(new object()));
+        numberPage++;
+        ChangeGraph(numberPage);
+        StateHasChanged();
+    }
+    void ChooseAll()
+    {
+        Aliexpress = All == false ? true : false;
+        Wildberries = All == false ? true : false;
+        ChooseAliexpress();
+        ChooseWildberries();
+        StateHasChanged();
+    }
+    void ChooseAliexpress()
+    {
+        if (!AppState.Instance.WebResources.Contains(new WebResourceAliexpress()))
+            AppState.Instance.WebResources.Add(new WebResourceAliexpress());
+        else
+            AppState.Instance.WebResources.Remove(new WebResourceAliexpress());
+    }
+    void ChooseWildberries()
+    {
+        if (!AppState.Instance.WebResources.Contains(new WebResourceWildberries()))
+            AppState.Instance.WebResources.Add(new WebResourceWildberries());
+        else
+            AppState.Instance.WebResources.Remove(new WebResourceWildberries());
+    }
+    void ChangeGraph(int numberPage)
+    {
+        var count = 8 * (numberPage - 1);
+        pageMain.Product1 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 1) ? AppState.Instance.Products[count] : new Product()) : new Product();
+        pageMain.Product2 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 2) ? AppState.Instance.Products[(count + 1)] : new Product()) : new Product();
+        pageMain.Product3 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 3) ? AppState.Instance.Products[(count + 2)] : new Product()) : new Product();
+        pageMain.Product4 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 4) ? AppState.Instance.Products[(count + 3)] : new Product()) : new Product();
+        pageMain.Product5 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 5) ? AppState.Instance.Products[(count + 4)] : new Product()) : new Product();
+        pageMain.Product6 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 6) ? AppState.Instance.Products[(count + 5)] : new Product()) : new Product();
+        pageMain.Product7 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 7) ? AppState.Instance.Products[(count + 6)] : new Product()) : new Product();
+        pageMain.Product8 = AppState.Instance.Products != null ? (AppState.Instance.Products.Count >= (count + 8) ? AppState.Instance.Products[(count + 7)] : new Product()) : new Product();
+
+
+
+        visibleProduct1 = pageMain.Product1.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct2 = pageMain.Product2.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct3 = pageMain.Product3.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct4 = pageMain.Product4.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct5 = pageMain.Product5.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct6 = pageMain.Product6.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct7 = pageMain.Product7.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+        visibleProduct8 = pageMain.Product8.Status != StatusProduct.EmptyProduct ? "visible" : "invisible";
+    }
+    string IsVisiblePage1()
+    {
+        return AppState.Instance?.Products?.Count > 0 ? "visible" : "invisible";
+    }
+    string IsVisiblePage2()
+    {
+        return AppState.Instance?.Products?.Count > 8 ? "visible" : "invisible";
+    }
+    string IsVisiblePage3()
+    {
+        return AppState.Instance?.Products?.Count > 16 ? "visible" : "invisible";
+    }
+    string IsVisiblePage4()
+    {
+        return AppState.Instance?.Products?.Count > 24 ? "visible" : "invisible";
+    }
+    string IsVisiblePage5()
+    {
+        return AppState.Instance?.Products?.Count > 32 ? "visible" : "invisible";
+    }
+    string IsVisiblePage6()
+    {
+        return AppState.Instance?.Products?.Count > 40 ? "visible" : "invisible";
+    }
+    string IsVisiblePage7()
+    {
+        return AppState.Instance?.Products?.Count > 48 ? "visible" : "invisible";
+    }
+    void OpenPage1()
+    {
+        ChangeGraph(1);
+        StateHasChanged();
+    }
+    void OpenPage2()
+    {
+        ChangeGraph(2);
+        StateHasChanged();
+    }
+    void OpenPage3()
+    {
+        ChangeGraph(3);
+        StateHasChanged();
+    }
+    void OpenPage4()
+    {
+        ChangeGraph(4);
+        StateHasChanged();
+    }
+    void OpenPage5()
+    {
+        ChangeGraph(5);
+        StateHasChanged();
+    }
+    void OpenPage6()
+    {
+        ChangeGraph(6);
+        StateHasChanged();
+    }
+    void OpenPage7()
+    {
+        ChangeGraph(7);
+        StateHasChanged();
+    }
+    object SortProduct(string indexSelect)
+    {
+        switch (indexSelect)
+        {
+            case "-1":
+                break;
+            case "0":
+                SortMin();
+                break;
+            case "1":
+                SortMax();
+                break;
+        }
+        OpenPage1();
+        return new object();
+    }
+    object SortMin()
+    {
+        AppState.Instance.SearchProducts?.OnComandSortMin();
+        return new object();
+    }
+    object SortMax()
+    {
+        AppState.Instance.SearchProducts?.OnComandSortMax();
+        return new object();
+    }
+
+    public class Page
+    {
+        public Product Product1;
+        public Product Product2;
+        public Product Product3;
+        public Product Product4;
+        public Product Product5;
+        public Product Product6;
+        public Product Product7;
+        public Product Product8;
+    }
+
+    protected override void OnInitialized()
+    {
+        pageMain ??= new Page();
+        pageMain.Product1 = new Product();
+        pageMain.Product2 = new Product();
+        pageMain.Product3 = new Product();
+        pageMain.Product4 = new Product();
+        pageMain.Product5 = new Product();
+        pageMain.Product6 = new Product();
+        pageMain.Product7 = new Product();
+        pageMain.Product8 = new Product();
+
+        if (AppState.Instance == null)
+            Init.InitModules();
+    }
+
+    public void Dispose()
+    {
+        Init.CloseModules();
+    }
+}
