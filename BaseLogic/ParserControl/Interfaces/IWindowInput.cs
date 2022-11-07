@@ -10,7 +10,7 @@ namespace ParserControl.Interfaces
     {
         void ParseWindow(params string[] parseButtonString);
         void DataInput(string inputString);
-
+        void PressEnter();
         bool IsInputPossible { get; }
 
         string Text { get; }

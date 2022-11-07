@@ -68,7 +68,7 @@ namespace ParserControl.SearchProducts.SearchTask.Aliexpress
 
         private bool IsRangePrice(int item)
         {
-            var price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/div/a/div[3]/div/div[1]")).Text;
+            var price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/div/a/div[3]/div[2]/div[1]")).Text;
             double.TryParse(string.Join("", price.Where(c => char.IsDigit(c) || c == ',')), out var value);          
             return value >= AppState.Instance.PriсeMin && value <= AppState.Instance.PriсeMax;
         }
@@ -98,7 +98,7 @@ namespace ParserControl.SearchProducts.SearchTask.Aliexpress
                 while (true)
                 {
                     count++;
-                    var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{count}]/div/a/div[1]/div[3]"));
+                    var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{count}]/div/div/a"));
                 }
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace ParserControl.SearchProducts.SearchTask.Aliexpress
         /// </summary>
         private bool IsExistProduct(int item)
         {
-            var id = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/a")).GetAttribute("href");
+            var id = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/div/a")).GetAttribute("href");
             var countProduct = _products.Where(x => x.Id == id).Count();
             return countProduct != 0;
         }
@@ -120,10 +120,12 @@ namespace ParserControl.SearchProducts.SearchTask.Aliexpress
         private Product GetSearchResult(int item)
         {
             //outerHTML
-            var photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/a/div/div[1]/div/div/img")).GetAttribute("src");
-            var name = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/div/a/div[1]/div")).Text;
-            var price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/div/a/div[3]/div/div[1]")).Text;
-            var link = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div[3]/div/div[{item}]/div/a")).GetAttribute("href");
+            string photo;
+            try {  photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/a/div[1]/div[1]/div/div/img")).GetAttribute("src"); }
+            catch {  photo = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/a/div[1]/div[1]/div/div[1]/img")).GetAttribute("src"); }
+            var name = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/div/a/div[1]/div[1]")).Text;
+            var price = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/div/a/div[3]/div[2]/div[1]")).Text;
+            var link = _chromeDriver.FindElement(By.XPath($"/html/body/div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[{item}]/div/div/a")).GetAttribute("href");
             var shopName = "aliexpress";
             var product = new Product(photo, name, price, link, shopName);
             return product;
@@ -138,7 +140,8 @@ namespace ParserControl.SearchProducts.SearchTask.Aliexpress
 
                 uiHomePage.SearchWindow.DataInput(AppState.Instance.SearchQuery);
                 Thread.Sleep(1000);
-                uiHomePage.SearchButton.Press();
+                uiHomePage.SearchWindow.PressEnter();
+                //uiHomePage.SearchButton.Press();
                 Thread.Sleep(3000);
                 return true;
             }

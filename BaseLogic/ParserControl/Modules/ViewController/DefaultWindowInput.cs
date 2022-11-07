@@ -53,6 +53,18 @@ namespace ParserControl.Modules.ViewController
             }
         }
 
+        public void PressEnter()
+        {
+            try
+            {
+                _driver.FindElement(By.XPath(_parseString)).SendKeys(Keys.Enter);
+            }
+            catch (ElementClickInterceptedException ex)
+            {
+                _driver.ExecuteScript("arguments[0].enter()", _driver.FindElement(By.XPath(_parseString)));
+            }
+        }
+
         private string GetText()
         {
             try

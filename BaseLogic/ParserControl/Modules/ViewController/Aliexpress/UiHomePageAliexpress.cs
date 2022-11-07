@@ -36,11 +36,13 @@ namespace ParserControl.Modules.ViewController.Aliexpress
         {
             string parseButtonStr1 = "/html/body/div[1]/div/div[2]/div/div/div[2]/div/form/button";
             string parseButtonStr2 = "/html/body/div[1]/div/div[2]/div/div/div/div[2]/div[1]/div[1]/form/button";
-            _searchButton.ParseButton(parseButtonStr1, parseButtonStr2);
+            string parseButtonStr3 = "/html/body/div[1]/div/div[3]/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/label";
+            _searchButton.ParseButton(parseButtonStr1, parseButtonStr2, parseButtonStr3 );
 
             string parseWindowStr1 = "/html/body/div[1]/div/div[2]/div/div/div[2]/div/form/div/div/input";
             string parseWindowStr2 = "/html/body/div[1]/div/div[2]/div/div/div/div[2]/div[1]/div[1]/form/div/div/input";
-            _searchWindow.ParseWindow(parseWindowStr1, parseWindowStr2);
+            string parseWindowStr3 = "//*[@id=\"searchInput\"]";
+            _searchWindow.ParseWindow(parseWindowStr1, parseWindowStr2, parseWindowStr3);
 
             //Костыль для определения кнопки перехода на следующую страницу
             for (int i = 0; i < 10; i++)
